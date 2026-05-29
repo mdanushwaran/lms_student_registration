@@ -1,0 +1,645 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&family=Sora:wght@500;600&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .lms-root {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--color-background-tertiary);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .lms-header {
+    background: var(--color-background-primary);
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .lms-logo {
+    width: 38px; height: 38px;
+    background: #185FA5;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    font-size: 18px;
+  }
+
+  .lms-header-text h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: 16px; font-weight: 600;
+    color: var(--color-text-primary);
+    letter-spacing: -0.3px;
+  }
+
+  .lms-header-text p {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    margin-top: 1px;
+  }
+
+  .form-wrap {
+    max-width: 840px;
+    margin: 28px auto;
+    padding: 0 16px 60px;
+  }
+
+  .section-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 24px 28px;
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title i { font-size: 16px; color: #185FA5; }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .form-group.full { grid-column: 1 / -1; }
+
+  label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.1px;
+  }
+
+  label .req { color: #E24B4A; margin-left: 2px; }
+
+  input, select, textarea {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    color: var(--color-text-primary);
+    background: var(--color-background-secondary);
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 9px 12px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+    width: 100%;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: #185FA5;
+    box-shadow: 0 0 0 3px rgba(24,95,165,0.12);
+    background: var(--color-background-primary);
+  }
+
+  input.error, select.error, textarea.error {
+    border-color: #E24B4A;
+    box-shadow: 0 0 0 3px rgba(226,75,74,0.1);
+  }
+
+  input.ok { border-color: #1D9E75; }
+
+  .err-msg {
+    font-size: 11px;
+    color: #E24B4A;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 16px;
+  }
+
+  .err-msg i { font-size: 13px; }
+
+  .radio-group {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 8px 0 4px;
+  }
+
+  .radio-opt {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--color-text-primary);
+  }
+
+  .radio-opt input[type=radio] {
+    width: 16px; height: 16px;
+    accent-color: #185FA5;
+    cursor: pointer;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .photo-area {
+    border: 1.5px dashed var(--color-border-secondary);
+    border-radius: var(--border-radius-lg);
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    background: var(--color-background-secondary);
+    position: relative;
+  }
+
+  .photo-area:hover { border-color: #185FA5; background: var(--color-background-primary); }
+
+  .photo-area i { font-size: 32px; color: var(--color-text-tertiary); display: block; margin-bottom: 8px; }
+
+  .photo-area p { font-size: 13px; color: var(--color-text-secondary); }
+
+  .photo-area span { font-size: 11px; color: var(--color-text-tertiary); }
+
+  .photo-preview {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #185FA5;
+    display: block;
+    margin: 0 auto 8px;
+  }
+
+  #photoInput { display: none; }
+
+  .submit-btn {
+    width: 100%;
+    padding: 13px;
+    background: #185FA5;
+    color: #fff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.15s, transform 0.1s;
+    letter-spacing: 0.2px;
+  }
+
+  .submit-btn:hover { background: #0C447C; }
+  .submit-btn:active { transform: scale(0.99); }
+
+  .submit-btn i { font-size: 18px; }
+
+  .success-banner {
+    display: none;
+    background: var(--color-background-success);
+    border: 0.5px solid var(--color-border-success);
+    border-radius: var(--border-radius-md);
+    padding: 14px 18px;
+    font-size: 14px;
+    color: var(--color-text-success);
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .success-banner.show { display: flex; }
+
+  .counter-bar {
+    background: var(--color-background-secondary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-md);
+    padding: 10px 16px;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .counter-num { font-weight: 600; color: #185FA5; font-size: 14px; }
+
+  .dl-btn {
+    background: transparent;
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 7px 14px;
+    font-size: 12px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.12s;
+  }
+
+  .dl-btn:hover { background: var(--color-background-secondary); }
+  .dl-btn i { font-size: 14px; }
+
+  .pwd-wrap { position: relative; }
+  .pwd-toggle {
+    position: absolute;
+    right: 10px; top: 50%;
+    transform: translateY(-50%);
+    background: none; border: none;
+    cursor: pointer;
+    color: var(--color-text-tertiary);
+    font-size: 16px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .strength-bar {
+    height: 3px;
+    border-radius: 2px;
+    background: var(--color-border-tertiary);
+    margin-top: 5px;
+    overflow: hidden;
+  }
+
+  .strength-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.3s, background 0.3s;
+    width: 0%;
+  }
+</style>
+
+<div class="lms-root">
+  <div class="lms-header">
+    <div class="lms-logo"><i class="ti ti-school" aria-hidden="true"></i></div>
+    <div class="lms-header-text">
+      <h1>LMS Student Registration</h1>
+      <p>Complete all fields to create your portal account</p>
+    </div>
+  </div>
+
+  <div class="form-wrap">
+    <div class="success-banner" id="successBanner">
+      <i class="ti ti-circle-check" style="font-size:20px" aria-hidden="true"></i>
+      <span>Student registered successfully! Your data has been saved and the Excel file downloaded.</span>
+    </div>
+
+    <div class="counter-bar" id="counterBar">
+      <span><span class="counter-num" id="studentCount">0</span> students registered</span>
+      <button class="dl-btn" onclick="downloadExcel()"><i class="ti ti-table-export"></i> Export Excel</button>
+    </div>
+
+    <form id="regForm" novalidate>
+
+      <!-- Academic Info -->
+      <div class="section-card">
+        <div class="section-title"><i class="ti ti-id-badge"></i>Academic information</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Register number <span class="req">*</span></label>
+            <input type="text" id="regNo" placeholder="e.g. 21CSE001" maxlength="15">
+            <div class="err-msg" id="regNo-err"></div>
+          </div>
+          <div class="form-group">
+            <label>Department <span class="req">*</span></label>
+            <select id="dept">
+              <option value="">Select department</option>
+              <option>MCA</option>
+              
+            </select>
+            <div class="err-msg" id="dept-err"></div>
+          </div>
+          <div class="form-group">
+            <label>Year <span class="req">*</span></label>
+            <select id="year">
+              <option value="">Select year</option>
+              <option>1st Year</option>
+              <option>2nd Year</option>
+
+            </select>
+            <div class="err-msg" id="year-err"></div>
+          </div>
+          <div class="form-group">
+            <label>Batch <span class="req">*</span></label>
+            <input type="text" id="batch" placeholder="e.g. 2021-2025" maxlength="10">
+            <div class="err-msg" id="batch-err"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Personal Info -->
+      <div class="section-card">
+        <div class="section-title"><i class="ti ti-user-circle"></i>Personal information</div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Student name <span class="req">*</span></label>
+            <input type="text" id="name" placeholder="e.g. Arun Kumar S" maxlength="60">
+            <div class="err-msg" id="name-err"></div>
+          </div>
+          <div class="form-group">
+            <label>Date of birth <span class="req">*</span></label>
+            <input type="date" id="dob">
+            <div class="err-msg" id="dob-err"></div>
+          </div>
+          <div class="form-group">
+            <label>Gender <span class="req">*</span></label>
+            <div class="radio-group">
+              <label class="radio-opt"><input type="radio" name="gender" value="Male"> Male</label>
+              <label class="radio-opt"><input type="radio" name="gender" value="Female"> Female</label>
+              <label class="radio-opt"><input type="radio" name="gender" value="Other"> Other</label>
+            </div>
+            <div class="err-msg" id="gender-err"></div>
+          </div>
+          <div class="form-group">
+            <label>Blood group <span class="req">*</span></label>
+            <select id="blood">
+              <option value="">Select blood group</option>
+              <option>A+</option><option>A-</option>
+              <option>B+</option><option>B-</option>
+              <option>AB+</option><option>AB-</option>
+              <option>O+</option><option>O-</option>
+            </select>
+            <div class="err-msg" id="blood-err"></div>
+          </div>
+          <div class="form-group full">
+            <label>Address <span class="req">*</span></label>
+            <textarea id="address" rows="3" placeholder="Door no., Street, City, District, State – PIN Code"></textarea>
+            <div class="err-msg" id="address-err"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="section-card">
+        <div class="section-title"><i class="ti ti-device-mobile"></i>Contact information</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Email address <span class="req">*</span></label>
+            <input type="email" id="email" placeholder="e.g. arun21@college.edu">
+            <div class="err-msg" id="email-err"></div>
+          </div>
+          <div class="form-group">
+            <label>Mobile number <span class="req">*</span></label>
+            <input type="tel" id="mobile" placeholder="e.g. 9876543210" maxlength="10">
+            <div class="err-msg" id="mobile-err"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account Info -->
+      <div class="section-card">
+        <div class="section-title"><i class="ti ti-lock"></i>Account credentials</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Username <span class="req">*</span></label>
+            <input type="text" id="username" placeholder="e.g. arun.kumar21" maxlength="30">
+            <div class="err-msg" id="username-err"></div>
+          </div>
+          <div class="form-group">
+            <label>Password <span class="req">*</span></label>
+            <div class="pwd-wrap">
+              <input type="password" id="password" placeholder="Min 8 chars, 1 number, 1 symbol" style="padding-right:36px">
+              <button type="button" class="pwd-toggle" onclick="togglePwd()" id="eyeBtn" aria-label="Toggle password visibility">
+                <i class="ti ti-eye" id="eyeIcon"></i>
+              </button>
+            </div>
+            <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+            <div class="err-msg" id="password-err"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Photo -->
+      <div class="section-card">
+        <div class="section-title"><i class="ti ti-photo"></i>Profile photo</div>
+        <div class="photo-area" onclick="document.getElementById('photoInput').click()" id="photoArea" role="button" aria-label="Upload profile photo">
+          <i class="ti ti-cloud-upload" id="photoIcon" aria-hidden="true"></i>
+          <p id="photoText">Click to upload profile photo</p>
+          <span id="photoSub">JPG, PNG or WEBP · Max 2 MB</span>
+        </div>
+        <input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp">
+        <div class="err-msg" id="photo-err"></div>
+      </div>
+
+      <button type="submit" class="submit-btn">
+        <i class="ti ti-user-plus"></i> Register student &amp; save to Excel
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+  let students = [];
+  let photoDataURL = '';
+
+  const form = document.getElementById('regForm');
+
+  function v(id) { return document.getElementById(id); }
+
+  function setErr(field, msg) {
+    const el = v(field + '-err');
+    const input = v(field);
+    if (el) { el.innerHTML = msg ? `<i class="ti ti-alert-circle"></i>${msg}` : ''; }
+    if (input) {
+      if (msg) { input.classList.add('error'); input.classList.remove('ok'); }
+      else if (input.value) { input.classList.remove('error'); input.classList.add('ok'); }
+    }
+  }
+
+  function clearErr(field) { setErr(field, ''); }
+
+  function validateAll() {
+    let ok = true;
+
+    const regNo = v('regNo').value.trim();
+    if (!regNo) { setErr('regNo', 'Register number is required'); ok = false; }
+    else if (!/^[A-Z0-9]{4,15}$/i.test(regNo)) { setErr('regNo', 'Only letters & numbers, 4-15 chars'); ok = false; }
+    else clearErr('regNo');
+
+    const name = v('name').value.trim();
+    if (!name) { setErr('name', 'Student name is required'); ok = false; }
+    else if (name.length < 3) { setErr('name', 'Name must be at least 3 characters'); ok = false; }
+    else if (!/^[a-zA-Z\s.]+$/.test(name)) { setErr('name', 'Name should contain only letters'); ok = false; }
+    else clearErr('name');
+
+    const email = v('email').value.trim();
+    if (!email) { setErr('email', 'Email address is required'); ok = false; }
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setErr('email', 'Enter a valid email address'); ok = false; }
+    else clearErr('email');
+
+    const mobile = v('mobile').value.trim();
+    if (!mobile) { setErr('mobile', 'Mobile number is required'); ok = false; }
+    else if (!/^[6-9]\d{9}$/.test(mobile)) { setErr('mobile', 'Enter valid 10-digit Indian mobile number'); ok = false; }
+    else clearErr('mobile');
+
+    const dept = v('dept').value;
+    if (!dept) { setErr('dept', 'Please select a department'); ok = false; }
+    else clearErr('dept');
+
+    const year = v('year').value;
+    if (!year) { setErr('year', 'Please select year of study'); ok = false; }
+    else clearErr('year');
+
+    const batch = v('batch').value.trim();
+    if (!batch) { setErr('batch', 'Batch is required'); ok = false; }
+    else if (!/^\d{4}-\d{4}$/.test(batch)) { setErr('batch', 'Format: YYYY-YYYY (e.g. 2021-2025)'); ok = false; }
+    else clearErr('batch');
+
+    const dob = v('dob').value;
+    if (!dob) { setErr('dob', 'Date of birth is required'); ok = false; }
+    else {
+      const d = new Date(dob);
+      const today = new Date();
+      let age = today.getFullYear() - d.getFullYear();
+      if (today.setFullYear(today.getFullYear()) < new Date(dob).setFullYear(today.getFullYear())) age--;
+      const realAge = new Date().getFullYear() - new Date(dob).getFullYear();
+      if (realAge < 15 || realAge > 40) { setErr('dob', 'Age must be between 15 and 40 years'); ok = false; }
+      else clearErr('dob');
+    }
+
+    const genderEl = document.querySelector('input[name=gender]:checked');
+    if (!genderEl) { setErr('gender', 'Please select gender'); ok = false; }
+    else clearErr('gender');
+
+    const blood = v('blood').value;
+    if (!blood) { setErr('blood', 'Please select blood group'); ok = false; }
+    else clearErr('blood');
+
+    const address = v('address').value.trim();
+    if (!address) { setErr('address', 'Address is required'); ok = false; }
+    else if (address.length < 15) { setErr('address', 'Please enter a complete address (min 15 chars)'); ok = false; }
+    else clearErr('address');
+
+    const username = v('username').value.trim();
+    if (!username) { setErr('username', 'Username is required'); ok = false; }
+    else if (!/^[a-z0-9._]{4,30}$/.test(username)) { setErr('username', 'Lowercase letters, numbers, dots & underscores (4-30 chars)'); ok = false; }
+    else clearErr('username');
+
+    const password = v('password').value;
+    if (!password) { setErr('password', 'Password is required'); ok = false; }
+    else if (password.length < 8) { setErr('password', 'Password must be at least 8 characters'); ok = false; }
+    else if (!/\d/.test(password)) { setErr('password', 'Must include at least one number'); ok = false; }
+    else if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) { setErr('password', 'Must include at least one special character'); ok = false; }
+    else clearErr('password');
+
+    return ok;
+  }
+
+  v('password').addEventListener('input', function() {
+    const p = this.value;
+    let score = 0;
+    if (p.length >= 8) score++;
+    if (/[A-Z]/.test(p)) score++;
+    if (/\d/.test(p)) score++;
+    if (/[^A-Za-z0-9]/.test(p)) score++;
+    const fill = v('strengthFill');
+    const colors = ['#E24B4A','#EF9F27','#1D9E75','#185FA5'];
+    const widths = ['25%','50%','75%','100%'];
+    fill.style.width = p ? widths[score-1] || '10%' : '0%';
+    fill.style.background = p ? colors[score-1] || '#E24B4A' : '';
+  });
+
+  v('photoInput').addEventListener('change', function() {
+    const file = this.files[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) { setErr('photo', 'File too large. Max 2 MB'); return; }
+    clearErr('photo');
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      photoDataURL = e.target.result;
+      const pa = v('photoArea');
+      pa.innerHTML = `<img src="${photoDataURL}" class="photo-preview" alt="Preview"><p id="photoText" style="font-size:13px;color:var(--color-text-secondary)">Photo selected ✓</p><span id="photoSub" style="font-size:11px;color:var(--color-text-tertiary)">${file.name}</span>`;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  function togglePwd() {
+    const inp = v('password');
+    const icon = v('eyeIcon');
+    if (inp.type === 'password') { inp.type = 'text'; icon.className = 'ti ti-eye-off'; }
+    else { inp.type = 'password'; icon.className = 'ti ti-eye'; }
+  }
+
+  function downloadExcel() {
+    window.open('/download.xlsx', '_blank');
+  }
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    if (!validateAll()) return;
+    const genderEl = document.querySelector('input[name=gender]:checked');
+    const student = {
+      regNo: v('regNo').value.trim().toUpperCase(),
+      name: v('name').value.trim(),
+      email: v('email').value.trim().toLowerCase(),
+      mobile: v('mobile').value.trim(),
+      dept: v('dept').value,
+      year: v('year').value,
+      batch: v('batch').value.trim(),
+      dob: v('dob').value,
+      gender: genderEl ? genderEl.value : '',
+      blood: v('blood').value,
+      address: v('address').value.trim(),
+      username: v('username').value.trim().toLowerCase(),
+      photo: photoDataURL,
+      registeredAt: new Date().toLocaleString('en-IN')
+    };
+
+    try {
+      const response = await fetch('/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(student)
+      });
+      const result = await response.json();
+      if (!result.ok) throw new Error('Registration failed');
+
+      students.push(student);
+      v('studentCount').textContent = students.length;
+      const banner = v('successBanner');
+      banner.innerHTML = '<i class="ti ti-circle-check" style="font-size:20px" aria-hidden="true"></i><span>Student registered successfully! Your data is saved in the database and Excel file.</span>';
+      banner.classList.add('show');
+      setTimeout(() => banner.classList.remove('show'), 4000);
+      window.open(result.download, '_blank');
+      form.reset();
+    photoDataURL = '';
+    v('photoArea').innerHTML = `<i class="ti ti-cloud-upload" id="photoIcon" aria-hidden="true"></i><p id="photoText">Click to upload profile photo</p><span id="photoSub">JPG, PNG or WEBP · Max 2 MB</span>`;
+      document.querySelectorAll('input.ok, select.ok, textarea.ok').forEach(el => el.classList.remove('ok'));
+      v('strengthFill').style.width = '0%';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (error) {
+      alert('Registration could not be saved. Please try again.');
+    }
+  });
+
+  ['regNo','name','email','mobile','batch','dob','address','username','password'].forEach(id => {
+    const el = v(id);
+    if (el) el.addEventListener('blur', () => {
+      if (el.value) {
+        el.classList.remove('error');
+        el.classList.add('ok');
+        clearErr(id);
+      }
+    });
+  });
+</script>
